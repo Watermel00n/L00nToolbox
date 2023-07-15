@@ -8,11 +8,10 @@ using UnityEngine.PlayerLoop;
 
 namespace LT_Tools
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu, false)]
     public class LT_GravSensor : PartModule
     {
         public ModuleGenerator converter;
-        public override void OnAwake()
+        public void Start()
         {
             if (part != null)
             {
@@ -34,6 +33,12 @@ namespace LT_Tools
                     ScreenMessages.PostScreenMessage("Vessel must be landed for converter to start! This converter will no longer work!", 5.0f);
                 }
             }
+        }
+        public override string GetInfo()
+        {
+            var outputstring = string.Empty;
+            outputstring = "Generator can only work if vessel is landed";
+            return outputstring;
         }
     }
 }

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace LT_Tools
 {
-    [KSPAddon(KSPAddon.Startup.MainMenu, false)]
     public class LT_KerbalSensor : PartModule
     {
         public ModuleGenerator converter;
         public int kerbalmodulecount;
-        public override void OnAwake()
+        public void Start()
         {
             if (part != null)
             {
@@ -35,11 +34,16 @@ namespace LT_Tools
                     if (converter.generatorIsActive == true)
                     {
                         converter.Shutdown();
-                        ScreenMessages.PostScreenMessage("Kerbal Count " + crewcount + "Modules Count " + kerbalmodulecount, 5.0f);
-                        ScreenMessages.PostScreenMessage("Part requires Kerbal to be inside Vessel in order to function!", 5.0f);
+                        ScreenMessages.PostScreenMessage("Not enough Kerbals! Kerbals: " + crewcount + " KerbalSensor Generators: " + kerbalmodulecount, 5.0f);
                     }
                 }
             }
+        }
+        public override string GetInfo()
+        {
+            var outputstring = string.Empty;
+            outputstring = "Generator can only work if there are at least as many kerbals as KerbalSensor generators";
+            return outputstring;
         }
     }
 }

@@ -10,7 +10,8 @@ namespace LT_Tools
 {
     public class LT_VesselAnchor : PartModule
     {
-        
+        [KSPField]
+        public int topSpeed = 5;
         [KSPField(isPersistant = true)]
         public bool anchorState = false;
         [KSPAction(guiName = "Disable Vessel Anchor")]
@@ -98,7 +99,7 @@ namespace LT_Tools
                 return;
             if (anchorState == false)
                 return;
-            if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed < 5)
+            if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed < topSpeed)
             {
                 syncUpAnchors();
                 ScreenMessages.PostScreenMessage("Vessel Anchor Enabled!");
@@ -113,9 +114,9 @@ namespace LT_Tools
                 }
                 return;
             }
-            else if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed > 5)
+            else if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed > topSpeed)
             {
-                ScreenMessages.PostScreenMessage("Vessel is moving faster than 5 m/s!");
+                ScreenMessages.PostScreenMessage("Vessel is moving faster than " + topSpeed + "m/s");
                 anchorState = false;
                 return;
             }
@@ -125,6 +126,12 @@ namespace LT_Tools
                 anchorState = false;
                 return;
             }
+        }
+        public override string GetInfo()
+        {
+            var outputstring = string.Empty;
+            outputstring = "Top Speed: " + topSpeed.ToString();
+            return outputstring;
         }
     }
 }
