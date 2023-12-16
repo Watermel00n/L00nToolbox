@@ -10,6 +10,11 @@ namespace LT_Tools
 {
     public class LT_VesselAnchor : PartModule
     {
+        public void message(string str)
+        {
+            ScreenMessages.PostScreenMessage(str);
+        }
+
         [KSPField]
         public int topSpeed = 5;
         [KSPField(isPersistant = true)]
@@ -63,6 +68,7 @@ namespace LT_Tools
             else if (anchorState == false)
             {
                 anchorState = true;
+                message("Vessel Anchor Enabled!");
                 syncUpAnchors();
             }
         }
@@ -102,7 +108,6 @@ namespace LT_Tools
             if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed < topSpeed)
             {
                 syncUpAnchors();
-                ScreenMessages.PostScreenMessage("Vessel Anchor Enabled!");
                 for (int i = 0; i < vessel.parts.Count; ++i)
                 {
                     var rigids = vessel.parts[i].Rigidbody;
@@ -135,3 +140,4 @@ namespace LT_Tools
         }
     }
 }
+
