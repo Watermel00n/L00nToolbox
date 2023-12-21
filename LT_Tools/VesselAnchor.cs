@@ -68,7 +68,18 @@ namespace LT_Tools
             else if (anchorState == false)
             {
                 anchorState = true;
-                message("Vessel Anchor Enabled!");
+                if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed < topSpeed)
+                {
+                    message("Vessel Anchor Enabled!");
+                }
+                else if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed > topSpeed)
+                {
+                    message("Vessel is moving faster than " + topSpeed + "m/s");
+                }
+                else
+                {
+                    message("Vessel needs to be landed!");
+                }
                 syncUpAnchors();
             }
         }
@@ -121,13 +132,11 @@ namespace LT_Tools
             }
             else if (vessel.Landed == true && anchorState == true && vessel.horizontalSrfSpeed > topSpeed)
             {
-                ScreenMessages.PostScreenMessage("Vessel is moving faster than " + topSpeed + "m/s");
                 anchorState = false;
                 return;
             }
             else
             {
-                ScreenMessages.PostScreenMessage("Vessel needs to be landed!");
                 anchorState = false;
                 return;
             }
@@ -140,4 +149,3 @@ namespace LT_Tools
         }
     }
 }
-
